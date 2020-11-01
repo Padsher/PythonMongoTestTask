@@ -2,11 +2,15 @@ import asyncio
 from aiohttp import web
 from umongo.fields import ObjectId
 from routes.routes import routes
+from routes.exceptions import ClientException
 from models.Product import Product
 
 @routes.post('/product')
 async def createProduct(request):
-    body = await request.json()
+    try:
+        body = await request.json()
+    except Exception as e:
+        raise ClientException('Invalid body')
 
     # every field may be null
     productToCreate = Product(
@@ -22,12 +26,17 @@ async def createProduct(request):
 async def getProductById(request):
     productId = request.match_info["id"]
     product = await Product.find_one({ 'id': ObjectId(productId) })
+    if product is None: raise ClientException(f'No product with ID {productId}')
     return web.json_response(product.toFullDict())
 
 
 @routes.get('/product')
 async def getProductByFilter(request):
-    body = await request.json()
+    try:
+        body = await request.json()
+    except Exception as e:
+        raise ClientException('Invalid body')
+
     name = body.get('name', None)
     properties = body.get('properties', None)
 

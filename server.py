@@ -1,12 +1,16 @@
 import traceback
+import json
 from aiohttp import web
 from config.server import PORT
 from routes.all import routes
+from routes.exceptions import ClientException
 
 @web.middleware
 async def globalExceptionHandler(req, handler):
     try:
         return await handler(req)
+    except ClientException as e:
+        return web.Response(status = 400, text = json.dumps({ 'error': e.message}))
     except Exception as e:
         print("Unknown exception") # use simple prints instead of logger for this test task
         print(e)
