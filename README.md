@@ -28,7 +28,7 @@ python main.py
 ## List of cURL test commands
 Those commands for server on localhost, 8080 port
 ### Fill with various data
-Firstly clear all products
+Firstly clear all products (route for several tests in a row)
 ```
 curl --request DELETE \
   --url http://localhost:8080/product
