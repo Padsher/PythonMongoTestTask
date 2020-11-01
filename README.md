@@ -20,6 +20,11 @@ For example
 docker run -d -p 27017:27017 mongo
 ```
 
+## Run server
+```
+python main.py
+```
+
 ## List of cURL test commands
 Those commands for server on localhost, 8080 port
 ### Fill with various data
