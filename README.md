@@ -1,6 +1,6 @@
 # Python test task
 
-Was tested on python 3.7.4
+Was tested on python 3.8.5
 
 ## Pre install
 ### Install dependencies
